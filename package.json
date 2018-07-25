@@ -1,0 +1,80 @@
+{
+  "name": "suitetreat",
+  "version": "1.0.0",
+  "description": "Honkai impact 3rd Voter",
+  "main": "build/index.js",
+  "bin": {
+    "suitetreat": "./bin/voter"
+  },
+  "preferGlobal": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1412/voter.git"
+  },
+  "keywords": [
+    "Suitetreat"
+  ],
+  "author": "Decky Fx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1412/voter/issues"
+  },
+  "homepage": "https://github.com/1412/voter#readme",
+  "devDependencies": {
+    "@types/chai": "^3.4.34",
+    "@types/jquery": "^2.0.33",
+    "@types/mocha": "^2.2.32",
+    "browser-sync": "^2.17.3",
+    "browserify": "^14.0.0",
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-istanbul": "^1.1.1",
+    "gulp-mocha": "^4.0.1",
+    "gulp-sourcemaps": "^2.1.1",
+    "gulp-tslint": "^8.0.0",
+    "gulp-typescript": "^3.1.4",
+    "gulp-uglify": "^2.0.0",
+    "run-sequence": "^1.2.2",
+    "tslint": "5.3.2",
+    "typescript": "^2.0.3",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "wallabify": "0.0.15"
+  },
+  "dependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/cli-color": "^0.3.29",
+    "@types/inquirer": "0.0.42",
+    "@types/jsdom": "^11.0.6",
+    "@types/lodash": "^4.14.111",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^10.5.2",
+    "@types/parse5": "^5.0.0",
+    "@types/request": "^2.47.1",
+    "@types/request-promise-native": "^1.0.15",
+    "@types/winston": "^2.3.9",
+    "chalk": "^2.4.1",
+    "cli-color": "^1.2.0",
+    "clui": "^0.3.6",
+    "convert-units": "^2.3.4",
+    "eslint": "^5.1.0",
+    "inquirer": "^6.0.0",
+    "jsdom": "^11.11.0",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.2",
+    "proxy-agent": "^3.0.1",
+    "request": "^2.87.0",
+    "request-promise-native": "^1.0.5",
+    "tempus-fugit": "^2.3.1",
+    "tsify": "^3.0.1",
+    "tunnel-ssh": "^4.1.4",
+    "typescript": "^2.9.2",
+    "vorpal": "^1.12.0",
+    "wget-improved": "^3.0.1",
+    "winston": "^3.0.0",
+    "winston-daily-rotate-file": "^3.2.3"
+  }
+}

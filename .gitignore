@@ -1,0 +1,8 @@
+# Ignore
+build/logs/*
+build/*.js.map
+build/*.js
+build/*/*.js.map
+build/*/*.js
+node_modules/*
+vpnconfigs/*
