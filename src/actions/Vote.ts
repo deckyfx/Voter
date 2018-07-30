@@ -16,7 +16,7 @@ const wget = require("wget-improved");
 const ProxyAgent = require("proxy-agent");
 
 export default class Vote extends ActionBase {
-    private static ART_ID                       = 126; // Global Theresa Vacation by Young Deer
+    private static ART_ID                       = [ 288, 126 ]; // Global Theresa Vacation by Young Deer
     private static VPN_GATE                     = "http://www.vpngate.net/en/";
     private static ASIA_EVENT_URL               = "http://event.asia.honkaiimpact3.com/bh3_fans/xmlHttp.php";
     private static GLOBAL_EVENT_URL             = "http://event.global.honkaiimpact3.com/bh3_fans/xmlHttp.php";
@@ -272,12 +272,12 @@ export default class Vote extends ActionBase {
         });
     }
 
-    private doVote(proxy?: ProxyConfig): Promise<boolean> {
+    private doVote(config: RequestConfig): Promise<boolean> {
         let proxy_log = "";
         let request_config: any = {
             form: {
                 // Like <input type="text" name="name">
-                id: Vote.ART_ID,
+                id: config.artid,
                 type: "vote",
             },
             headers: {
@@ -287,36 +287,53 @@ export default class Vote extends ActionBase {
             timeout: 20000, // 20 seconds
             uri: Vote.GLOBAL_EVENT_URL,
         };
-        if (proxy) {
+        if (config.proxy) {
             let proxy_host = "";
-            if (_.includes(proxy.type, "HTTP")) {
-                proxy_host = `http://${proxy.ip}:${proxy.port}`;
-                proxy_log = `Using HTTP proxy ${proxy.ip}:${proxy.port} (${proxy.location})`;
+            if (_.includes(config.proxy.type, "HTTP")) {
+                proxy_host = `http://${config.proxy.ip}:${config.proxy.port}`;
+                proxy_log = `Using HTTP proxy ${config.proxy.ip}:${config.proxy.port} (${config.proxy.location})`;
                 request_config.agent = new ProxyAgent(proxy_host);
-            } else if (_.includes(proxy.type, "HTTPS")) {
-                proxy_host = `https://${proxy.ip}:${proxy.port}`;
-                proxy_log = `Using HTTPS proxy ${proxy.ip}:${proxy.port} (${proxy.location})`;
+            } else if (_.includes(config.proxy.type, "HTTPS")) {
+                proxy_host = `https://${config.proxy.ip}:${config.proxy.port}`;
+                proxy_log = `Using HTTPS proxy ${config.proxy.ip}:${config.proxy.port} (${config.proxy.location})`;
                 request_config.agent = new ProxyAgent(proxy_host);
             }
         }
-        Util.vorpal.log(`[VOTE] Voting for artwork with id ${Vote.ART_ID} ${proxy_log}`);
+        Util.vorpal.log(`[VOTE] Voting for artwork with id ${config.artid} ${proxy_log}`);
         Util.spinner.start();
         return rp(request_config).then((htmlString: string) => {
             // {"state":0,"msg":"Vote submitted!","data":[]}
             Util.spinner.stop();
             let result = JSON.parse(htmlString);
             if (result.msg === "Vote submitted!") {
-                Util.vorpal.log(`[VOTE] ${Util.clc.green("SUCCESS")} voted for artwork with id ${Vote.ART_ID}`);
+                Util.vorpal.log(`[VOTE] ${Util.clc.green("SUCCESS")} voted for artwork with id ${config.artid}`);
                 return Promise.resolve(true);
             } else {
-                Util.vorpal.log(`[VOTE] ${Util.clc.red("FAILED")} Already voted for artwork with id ${Vote.ART_ID}`);
+                Util.vorpal.log(`[VOTE] ${Util.clc.red("FAILED")} Already voted for artwork with id ${config.artid}`);
                 return Promise.resolve(false);
             }
         })
         .catch((e) => {
             Util.spinner.stop();
-            Util.vorpal.log(`[VOTE] ${Util.clc.red("FAILED")} to vote for artwork with id ${Vote.ART_ID}`);
+            Util.vorpal.log(`[VOTE] ${Util.clc.red("FAILED")} to vote for artwork with id ${config.artid}`);
             return Promise.resolve(false);
+        });
+    }
+
+    private voteThenWait(config: RequestConfig): Promise<boolean> {
+        return this.doVote(config).then((result) => { return this.wait(20000); });
+    }
+
+    private voteForAllArts(proxy?: ProxyConfig): Promise<boolean> {
+        let args: Array<RequestConfig> = _.map(Vote.ART_ID, (artid: number) => {
+            let config = new RequestConfig();
+            config.artid = artid;
+            config.proxy = proxy;
+            return config;
+        });
+        return Util.SequencePromises<RequestConfig, boolean>(args, this.voteThenWait.bind(this))
+        .then(() => {
+            return Promise.resolve(true);
         });
     }
 
@@ -367,7 +384,7 @@ export default class Vote extends ActionBase {
                     return this.whatsIsMyIP();
                 })
                 .then((_result) => {
-                    return this.doVote();
+                    return this.voteForAllArts();
                 })
                 .then((_result) => {
                     return this.disconnectVPN();
@@ -394,7 +411,7 @@ export default class Vote extends ActionBase {
         return this.getProxyList()
         .then((proxies) => {
             // proxies = proxies.slice(0, 4);
-            return Util.SequencePromises<ProxyConfig, boolean>(proxies, this.doVote.bind(this));
+            return Util.SequencePromises<ProxyConfig, boolean>(proxies, this.voteForAllArts.bind(this));
         });
     }
 
@@ -418,4 +435,9 @@ export default class Vote extends ActionBase {
         });
         return 0;
     }
+}
+
+class RequestConfig {
+    public artid= 0;
+    public proxy?: ProxyConfig;
 }
