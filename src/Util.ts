@@ -48,6 +48,18 @@ export class Util {
         });
     }
 
+    public wait(second: number): Promise<boolean> {
+        this.spinner.stop();
+        this.vorpal.log(`[WAIT] for ${second} ms`);
+        this.spinner.start();
+        return new Promise<boolean>( (resolve, reject) => {
+            setTimeout(() => {
+                this.spinner.stop();
+                resolve(true);
+            }, second);
+        });
+    }
+
     private test(test: string): Promise<number> {
         return Promise.resolve(0);
     }
