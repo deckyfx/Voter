@@ -1,8 +1,12 @@
 # Voter
 
-Install nodejs
-
+## How to?
+- install nodejs
+- run ```npm install typescript -g```
+- clone or download this project, and enter to its directory
 - run ```npm install -d```
-- install ```npm install typescript -g```
 - run ```tsc: build```
-- run ```./bin/voter vote```
+- run ```./bin/voter vote``` for mac / Linux
+- run ```node build\index.js vote``` for Windows
+- wait and drink cofee
+- profit
