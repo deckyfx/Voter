@@ -4,5 +4,7 @@ build/*.js.map
 build/*.js
 build/*/*.js.map
 build/*/*.js
+build/*/*/*.js
+build/*/*/*.js.map
 node_modules/*
 vpnconfigs/*

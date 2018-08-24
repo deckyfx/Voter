@@ -8,8 +8,17 @@ import VPNManager from "../repositories/VPNManager";
 const ProxyAgent = require("proxy-agent");
 
 export default class Vote extends ActionBase {
-    private static ART_ID                       = [ 288, 126 ]; // Global Theresa Vacation by Young Deer
-    private static GLOBAL_EVENT_URL             = "http://event.global.honkaiimpact3.com/bh3_fans/xmlHttp.php";
+    /* Obsolete
+    // private static ART_ID                       = [ 288 ]; // Global Theresa Vacation by Young Deer
+    // private static ART_ID                       = [ 388 ]; // Koris
+    */
+    private static ART_ID                       = [ 53 ]; // Koris global final
+    /* Obsolete
+    // private static GLOBAL_EVENT_URL             = "http://event.global.honkaiimpact3.com/bh3_fans/xmlHttp.php";
+    // private static GLOBAL_EVENT_URL             = "http://event.asia.honkaiimpact3.com/bh3_fans/xmlHttp.php";
+    */
+    // Global Final
+    private static GLOBAL_EVENT_URL             = "http://event.global.honkaiimpact3.com/global_summer_finals/summer/vote";    
     private ProxyManager                        = new ProxyManager();
     private VPNManager                          = new VPNManager();
 
@@ -65,8 +74,8 @@ export default class Vote extends ActionBase {
                     if (config.retry >= 10) {
                         return Promise.resolve(false);
                     } else {
-                        Util.vorpal.log(`[VOTE] [WAIT] Attempt to retry #${config.retry} after ${config.retry * 5} seconds`);
-                        return Util.wait(config.retry * 5000).then(() => {
+                        Util.vorpal.log(`[VOTE] [WAIT] Attempt to retry #${config.retry} after ${20} seconds`);
+                        return Util.wait(20000).then(() => {
                             return this.doVote(config);
                         });
                     }

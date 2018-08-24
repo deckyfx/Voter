@@ -6,11 +6,10 @@
 - run ```npm install typescript -g```
 - clone or download this project, and enter to its directory
 - run ```npm install -d```
-- run ```node_modules/.bin/tsc -p tsconfig.json``` for mac / Linux
-- run ```node_modules\.bin\tsc.cmd -p tsconfig.json``` for Windows
+- run ```npm run compile``` for mac / Linux
+- run ```npm run compile-win``` for Windows
 
 ## How to run?
-- run ```./bin/voter vote``` for mac / Linux
-- run ```node build\index.js vote``` for Windows
+- run ```npm run start``` to run program
 - wait and drink cofee
 - profit

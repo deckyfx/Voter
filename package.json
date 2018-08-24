@@ -8,7 +8,10 @@
   },
   "preferGlobal": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "./node_modules/.bin/tsc -p tsconfig.json",
+    "compile-win": "node_modules\\.bin\\tsc.cmd -p tsconfig.json",
+    "start": "node ./build/index.js"
   },
   "repository": {
     "type": "git",
