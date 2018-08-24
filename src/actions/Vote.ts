@@ -37,7 +37,7 @@ export default class Vote extends ActionBase {
             form: {
                 // Like <input type="text" name="name">
                 id: config.artid,
-                type: "vote",
+                // type: "vote",
             },
             headers: {
                 /* 'content-type': 'application/x-www-form-urlencoded' */ // Is set automatically
@@ -64,8 +64,13 @@ export default class Vote extends ActionBase {
             // {"state":0,"msg":"Vote submitted!","data":[]}
             Util.spinner.stop();
             let result = JSON.parse(htmlString);
-            if (result.msg === "Vote submitted!") {
+            if (result.msg === "Vote submitted!" || result.msg === "success") {
                 Util.vorpal.log(`[VOTE] ${Util.clc.green("SUCCESS")} voted for artwork with id ${config.artid}`);
+                if (result.data) {
+                    if (result.data.votes) {
+                        Util.vorpal.log(`[VOTE] ${Util.clc.blue("INFO")} Currently has ${result.data.votes} voters`);
+                    }
+                }
                 return Promise.resolve(true);
             } else {
                 Util.vorpal.log(`[VOTE] ${Util.clc.red("FAILED")} MiHoYo Replied: "${result.msg}" for artwork with id ${config.artid}`);
@@ -84,9 +89,9 @@ export default class Vote extends ActionBase {
                 }
             }
         })
-        .catch(() => {
+        .catch((e) => {
                 Util.spinner.stop();
-                Util.vorpal.log(`[VOTE] ${Util.clc.red("FAILED")} to vote for artwork with id ${config.artid}`);
+                Util.vorpal.log(`[VOTE] ${Util.clc.red("FAILED")} to vote for artwork with id ${config.artid}: ${e.message}`);
                 return Promise.resolve(false);
             });
     }
