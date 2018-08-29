@@ -5,6 +5,7 @@ import * as _ from "lodash";
 import FreeProxyListNet from "./FreeProxyList.Net";
 import FreeProxyCz from "./FreeProxyCz";
 import GatherProxyCom from "./GatherProxyCom";
+import CSVProxy from "./CSVProxy";
 
 export default class ProxyManager {
     private ProxySources: Array<ProxyProviderBase> = [] ;
@@ -12,8 +13,8 @@ export default class ProxyManager {
 
     public constructor(...sources: ProxyProviderBase[]) {
         sources = [
-            new FreeProxyListNet(),
-            // new GatherProxyCom(),
+            new CSVProxy(),
+            // new FreeProxyListNet(),
         ];
         for (let source of sources) {
             this.ProxySources.push(source);

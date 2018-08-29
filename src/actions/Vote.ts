@@ -18,7 +18,7 @@ export default class Vote extends ActionBase {
     // private static GLOBAL_EVENT_URL             = "http://event.asia.honkaiimpact3.com/bh3_fans/xmlHttp.php";
     */
     // Global Final
-    private static GLOBAL_EVENT_URL             = "http://event.global.honkaiimpact3.com/global_summer_finals/summer/vote";    
+    private static GLOBAL_EVENT_URL             = "http://event.global.honkaiimpact3.com/global_summer_finals/summer/vote";
     private ProxyManager                        = new ProxyManager();
     private VPNManager                          = new VPNManager();
 
@@ -55,6 +55,18 @@ export default class Vote extends ActionBase {
             } else if (_.includes(config.proxy.type, "HTTPS")) {
                 proxy_host = `https://${config.proxy.ip}:${config.proxy.port}`;
                 proxy_log = `Using HTTPS proxy ${config.proxy.ip}:${config.proxy.port} (${config.proxy.location})`;
+                request_config.agent = new ProxyAgent(proxy_host);
+            } else if (_.includes(config.proxy.type, "SOCKS4")) {
+                proxy_host = `socks5://${config.proxy.ip}:${config.proxy.port}`;
+                proxy_log = `Using SOCKS4 proxy ${config.proxy.ip}:${config.proxy.port} (${config.proxy.location})`;
+                request_config.agent = new ProxyAgent(proxy_host);
+            } else if (_.includes(config.proxy.type, "SOCKS5")) {
+                proxy_host = `socks4://${config.proxy.ip}:${config.proxy.port}`;
+                proxy_log = `Using SOCKS5 proxy ${config.proxy.ip}:${config.proxy.port} (${config.proxy.location})`;
+                request_config.agent = new ProxyAgent(proxy_host);
+            } else if (_.includes(config.proxy.type, "SOCKS")) {
+                proxy_host = `socks://${config.proxy.ip}:${config.proxy.port}`;
+                proxy_log = `Using SOCKS proxy ${config.proxy.ip}:${config.proxy.port} (${config.proxy.location})`;
                 request_config.agent = new ProxyAgent(proxy_host);
             }
         }
