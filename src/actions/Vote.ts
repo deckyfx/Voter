@@ -102,6 +102,9 @@ export default class Vote extends ActionBase {
                 }
             }
         })
+        .then(() => {
+            return Util.wait(20000);
+        })
         .catch((e) => {
                 Util.spinner.stop();
                 Util.vorpal.log(`[VOTE] ${Util.clc.red("FAILED")} to vote for artwork with id ${config.artid}: ${e.message}`);
