@@ -12,7 +12,8 @@ export default class Vote extends ActionBase {
     // private static ART_ID                       = [ 288 ]; // Global Theresa Vacation by Young Deer
     // private static ART_ID                       = [ 388 ]; // Koris
     */
-    private static ART_ID                       = [ 53 ]; // Koris global final
+    // private static ART_ID                           = [ 53 ]; // Koris global final
+    private static ART_ID                           = [ 12 ]; // Global Theresa Vacation by Young Deer
     /* Obsolete
     // private static GLOBAL_EVENT_URL             = "http://event.global.honkaiimpact3.com/bh3_fans/xmlHttp.php";
     // private static GLOBAL_EVENT_URL             = "http://event.asia.honkaiimpact3.com/bh3_fans/xmlHttp.php";
@@ -57,11 +58,11 @@ export default class Vote extends ActionBase {
                 proxy_log = `Using HTTPS proxy ${config.proxy.ip}:${config.proxy.port} (${config.proxy.location})`;
                 request_config.agent = new ProxyAgent(proxy_host);
             } else if (_.includes(config.proxy.type, "SOCKS4")) {
-                proxy_host = `socks5://${config.proxy.ip}:${config.proxy.port}`;
+                proxy_host = `socks4://${config.proxy.ip}:${config.proxy.port}`;
                 proxy_log = `Using SOCKS4 proxy ${config.proxy.ip}:${config.proxy.port} (${config.proxy.location})`;
                 request_config.agent = new ProxyAgent(proxy_host);
             } else if (_.includes(config.proxy.type, "SOCKS5")) {
-                proxy_host = `socks4://${config.proxy.ip}:${config.proxy.port}`;
+                proxy_host = `socks5://${config.proxy.ip}:${config.proxy.port}`;
                 proxy_log = `Using SOCKS5 proxy ${config.proxy.ip}:${config.proxy.port} (${config.proxy.location})`;
                 request_config.agent = new ProxyAgent(proxy_host);
             } else if (_.includes(config.proxy.type, "SOCKS")) {
