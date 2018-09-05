@@ -103,7 +103,9 @@ export default class Vote extends ActionBase {
             }
         })
         .then(() => {
-            return Util.wait(20000);
+            let waitTime = (Math.random() * 240000) + 60000;
+            Util.vorpal.log(`[VOTE] [WAIT] Next action will be performed in ${waitTime / 1000} seconds`);
+            return Util.wait(waitTime);
         })
         .catch((e) => {
                 Util.spinner.stop();
